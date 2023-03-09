@@ -2,10 +2,20 @@
 category:
     shop_by_price: true
     products:
-        limit: {{theme_settings.categorypage_products_per_page}}
+        limit: 100
 ---
-{{inject "categoryProductsPerPage" theme_settings.categorypage_products_per_page}}
+{{#if (getVar 'UUIDcounter')}}
+    {{assignVar 'UUIDcounter' (add (getVar 'UUIDcounter') 1)}}
+    {{assignVar 'UUIDcatc' (add (toInt (moment unixtimestamp format="x")) (getVar 'UUIDcounter'))}}
+{{else}}
+    {{assignVar 'UUIDcounter' 1}}
+    {{assignVar 'UUIDcatc' (toInt (moment unixtimestamp format="x"))}}
+{{/if}}
+{{inject "categoryProductsPerPage" 100}}
 {{inject "categoryId" category.id}}
+{{inject "products" category.products}}
+{{inject "UUIDcatc" (getVar 'UUIDcounter')}}
+{{inject "subcategories" category.subcategories}}
 
 {{#partial "head"}}
     {{#if pagination.category.previous}}
@@ -27,26 +37,20 @@ category:
             <!--{{{region name="category_below_header"}}}-->
         {{/unless}}
     </div>
-    
     <section class="categoryGrid container">
-       <div style="text-align:center;width: 100%;margin-bottom: 40px;">
+            <div style="text-align:center;width: 100%;margin-bottom: 40px;">
             <a  href="/march-mudness/">
             <div style="width:100%;/* max-width:600px; */margin: auto;text-align:center;padding: 1em 0;background-color:#d20000">
                 <h2 style="margin:0;color:white;font-size:2.5em!important;">
                     MARCH "MUDNESS" SALE
                 </h2>
                 <h3 style="color:white;margin:0 0 10px 0;">
-                    TOOLS UP TO 30% OFF!
+                    TOOLS UP TO 25% OFF!
                 </h3>
-            </div>
-            </a>
-        </div> 
-    </section>
+            </div></a>
+        </div>
 
     {{#if category.subcategories}}
-    <section class="categoryGrid container">
-            
-        
         <ul class="categoryGrid_list">
             {{#each category.subcategories}}
             <li class="categoryGrid_list-items">
@@ -134,6 +138,160 @@ category:
     <!-- ITS LOADING OVERLAY -->
     <div class="loadingOverlay loadingOverlay--product-listing"></div>
 </div>
+
+<style>
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: auto;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #cacaca;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+
+/* ********************************** */
+.grid {
+    /* background: #DDD; */
+    all: unset;
+    display: flex;
+    flex-wrap: wrap;
+    /* max-width: 1200px; */
+    width: 100%;
+    min-width: 320px; 
+    /* gap: 50px; */
+    place-items: center;
+    margin-top: 10px;
+}
+
+.grid:after {
+    content: '';
+    display: block;
+    clear: both;
+    margin-top: 10px;
+}
+
+/* ---- .grid-item ---- */
+
+.product {
+    float: center;
+    width: 25%;
+    min-width: 280px;
+    height: 450px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+}
+
+.flex-div-section {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.filter--section{
+    width: 300px;
+    margin-right: 25px;
+}
+
+#product-listing-all{
+    /* margin-left: 35px; */
+}
+
+@media only screen and (max-width: 860px) and (min-width: 600px){
+        
+        .product {
+            float: none;
+            width: 33%;
+            min-width: auto;
+            height: auto;
+            padding-bottom: 20px;
+            padding-right: 20px;
+            overflow: visible;
+        }
+        
+        #product-block {
+            margin-right: -10px;
+            
+        }
+        #product-listing-container{
+            padding-right: 0px;
+        }
+        
+    }
+
+
+@media only screen and (max-width: 600px)  {
+        
+        .product {
+            right: 0px ;
+            padding-right: 0px;
+            margin: auto;
+            width: 100%;
+            min-height: auto;
+            height:auto !important;
+        }
+        
+        figure.card-figure {
+            overflow: visible;
+        }
+        #product-listing-all {
+            margin: 0;
+        }
+        
+    }
+
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 
 {{/partial}}
 {{> layout/base container_active=false}}
