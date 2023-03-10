@@ -169,10 +169,12 @@ export default class Category extends CatalogPage {
   }
 
   validateProductsCount() {
+    $("#all-sort-select, #all-sort-select-mobile").prop("disabled", true);
     const products = this.context.products;
     const body = this;
     const UUIDcatc = this.context.UUIDcatc;
     const categoryId = this.context.categoryId;
+    let num = this.context.num;
     // console.log(products);
     const existProdId = [];
     products.forEach((pr) => {
@@ -185,16 +187,27 @@ export default class Category extends CatalogPage {
       })
       .then(function (response) {
         const data = response.data.product;
+        let restOfTemplate = [];
         data.forEach((pr) => {
           if (existProdId.includes(pr["id"])) {
             const $item = $(`.product[data-entity-id="${pr["id"]}"]`);
             $item.attr("data-best-selling", `${pr["total_sold"]}`);
             $item.attr("data-date-created", `${pr["date_created"]}`);
           } else {
-            const template = constructTemplate(pr);
-            $("#product-listing-all").append(template);
+            restOfTemplate.push({ total_sold: pr["total_sold"], item: pr });
           }
         });
+        restOfTemplate = customInsertionSort(
+          restOfTemplate,
+          restOfTemplate.length
+        );
+
+        restOfTemplate.forEach((pr) => {
+          const template = constructTemplate(pr["item"], num);
+          num = num + 1;
+          $("#product-listing-all").append(template);
+        });
+
         $("#loader-block").hide();
         body.configureIsotopeForAll();
         body.startGlobal();
@@ -204,7 +217,7 @@ export default class Category extends CatalogPage {
         console.log(error);
       });
 
-    function constructTemplate(pr) {
+    function constructTemplate(pr, num) {
       let img = {};
       for (let i = 0; i < pr["images"].length; i++) {
         if (pr["images"][i]["is_thumbnail"]) {
@@ -255,22 +268,24 @@ export default class Category extends CatalogPage {
           <div id="product-${pr["id"]}" sort-order="${pr["sort_order"]}" 
           class="product"
           product-data-category="${pr["categories"]}" 
-          product-data-name="${pr["fake-heading"]}" 
-          product-data-review="${
+          data-name="${pr["name"]}" 
+           data-fake-name="${pr["fake-heading"]}"
+          data-rating="${
             pr["reviews_count"] === 0
               ? 0
               : pr["reviews_rating_sum"] / pr["reviews_count"]
           }"
           product-review-count="${pr["reviews_count"]}" 
-          product-data-price="${
+          data-product-price="${
             pr["variants"].length > 1
               ? pr["variants"][0]["calculated_price"].toFixed(2)
               : pr["calculated_price"].toFixed(2)
           }" 
-          product-date-created="${pr["date_created"]}" 
+          data-date-created="${pr["date_created"]}" 
           product-is-featured="${pr["is_featured"]}" 
-          product-best-selling="${pr["total_sold"]}"
-          product-custom-sort-order="${pr["custom-sort-order"]}"
+          data-best-selling="${pr["total_sold"]}"
+          data-custom-sort="${pr["custom-sort-order"]}"
+          data-custom-num="${num}"
           
           product-filter-IAT=""
           product-filter-FBS=""
@@ -401,6 +416,24 @@ export default class Category extends CatalogPage {
           </div>`;
       return template;
     }
+
+    function customInsertionSort(arr, n) {
+      let i, key, j;
+      for (i = 1; i < n; i++) {
+        key = arr[i]["total_sold"];
+        j = i - 1;
+
+        /* Move elements of arr[0..i-1], that are 
+        greater than key, to one position ahead 
+        of their current position */
+        while (j >= 0 && arr[j]["total_sold"] > key) {
+          arr[j + 1]["total_sold"] = arr[j]["total_sold"];
+          j = j - 1;
+        }
+        arr[j + 1]["total_sold"] = key;
+      }
+      return arr;
+    }
   }
 
   configureIsotopeForAll() {
@@ -467,6 +500,7 @@ export default class Category extends CatalogPage {
         // options...
         itemSelector: ".product",
         layoutMode: "fitRows",
+
         getSortData: {
           name: function (itemElem) {
             return itemElem.getAttribute("data-name");
@@ -486,6 +520,9 @@ export default class Category extends CatalogPage {
           custom_sort_order: function (itemElem) {
             return Number(itemElem.getAttribute("data-custom-sort"));
           },
+          custom_sort_num: function (itemElem) {
+            return Number(itemElem.getAttribute("data-custom-num"));
+          },
         },
       });
       // });
@@ -496,10 +533,10 @@ export default class Category extends CatalogPage {
 
         if (val[0] === "review") {
           iso.arrange({
-            sortBy: [val[0], "rating_count"],
+            sortBy: [val[0]],
             sortAscending: {
               review: false,
-              rating_count: false,
+              // rating_count: false,
             },
           });
         } else {
@@ -520,8 +557,8 @@ export default class Category extends CatalogPage {
           });
         } else {
           iso.arrange({
-            sortBy: "best_selling",
-            sortAscending: false,
+            sortBy: "custom_sort_num",
+            sortAscending: true,
           });
         }
       }, 3);

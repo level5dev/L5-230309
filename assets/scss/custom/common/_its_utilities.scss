@@ -62,6 +62,8 @@ a.anchor-secondary {
 .bg-grey {
   background-color: #f9f9f9;
   margin-top: 40px;
+  position: relative;
+  z-index: 5;
 }
 
 .bg-paint-splatter {
@@ -511,6 +513,10 @@ a {
   grid-row-gap: 12px;
 }
 
+.shopnow--btn {
+  color: white;
+}
+
 .btn--shop {
   padding: 12px 35px;
   background-color: #cc2621;
@@ -557,15 +563,17 @@ a {
 .head--white {
   font-family: Oswald, sans-serif;
   color: #fff;
-  font-size: 48px;
+  //   font-size: 48px;
+  font-size: 3vw;
   line-height: 1;
-  font-weight: 400;
+  font-weight: 700;
   text-transform: uppercase;
+  margin-top: -20px;
 }
 
 .head--white.sm {
-  font-size: 24px;
-  font-weight: 400;
+  font-size: 2vw;
+  font-weight: 700;
 }
 
 .grid {
@@ -613,7 +621,8 @@ a {
 }
 
 .slider--custom {
-  height: 60vh;
+  //   height: 60vh;
+  height: 100%;
   background-color: transparent;
 }
 
@@ -635,9 +644,10 @@ a {
 }
 
 .cont--med {
-  height: 60vh;
+  //   height: 60vh;
+  height: 80vh;
   max-width: none;
-  padding-top: 22px;
+  padding-top: 30px;
   padding-right: 30px;
   padding-left: 30px;
 }
@@ -663,6 +673,11 @@ a {
   height: 100%;
 }
 
+.wf-section {
+  padding-right: 52px;
+  padding-left: 52px;
+}
+
 .slide-nav {
   display: none;
 }
@@ -672,6 +687,7 @@ a {
     margin-top: 0px;
     padding-top: 0px;
     position: relative;
+    height: 60vh;
   }
 
   .w-slider-aria-label {
@@ -682,12 +698,22 @@ a {
     display: none;
   }
 
+  .wf-section {
+    padding-right: 0px;
+    padding-left: 0px;
+    height: 60vh;
+  }
+
   .pos--rel__ctr.sm.slides {
     height: 60vh;
+    min-height: 0px !important;
+    // height: 100%;
   }
 
   .pos--rel__ctr.lg {
     height: 60vh;
+    min-height: 0px !important;
+    // height: 100%;
   }
 
   .background-video.w-background-video.w-background-video-atom {
@@ -700,6 +726,20 @@ a {
 
   .bg-grey {
     margin-top: 0px;
+  }
+
+  .h4--light {
+    font-size: 15px;
+  }
+
+  .head--white {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .head--white.sm {
+    font-size: 24px;
+    text-align: center;
   }
 }
 
@@ -899,7 +939,7 @@ a {
   }
 
   .slide--1 {
-    height: 100vh;
+    height: 60vh;
     min-width: 100%;
   }
 
@@ -909,12 +949,12 @@ a {
 
   .slide--2 {
     overflow: hidden;
-    height: 100vh;
+    height: 60vh;
     min-width: 100%;
   }
 
   .slide--3 {
-    height: 100vh;
+    height: 60vh;
     min-width: 100%;
   }
 

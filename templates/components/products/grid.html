@@ -1,4 +1,7 @@
+
+
 <div class="grid" id="product-listing-all">
+    {{assignVar "num" 0}}
     {{#each products}}
     <div class="product"
         data-event-type="{{event}}"
@@ -12,7 +15,7 @@
         data-product-price="{{#or customer (unless theme_settings.restrict_to_login)}}{{#if price.with_tax}}{{price.with_tax.value}}{{else}}{{price.without_tax.value}}{{/if}}{{else}}{{lang 'common.login_for_pricing'}}{{/or}}"
         data-rating="{{rating}}"
         data-num-rating="{{num_reviews}}"
-
+        data-custom-num="{{incrementVar 'num'}}"
         data-custom-sort="{{#filter custom_fields '__product-sort-order' property='name'}}{{this.value}}{{else}}999{{/filter}}"
         
         
@@ -25,8 +28,12 @@
         product-filter-NCP=""
         product-filter-NSI=""
         product-filter-HT=""
-    >
+    >       
+    <!-- <div class="product-content"> -->
             {{>components/products/card settings=../settings show_compare=../show_compare show_rating=../settings.show_product_rating theme_settings=../theme_settings customer=../customer event=../event position=(add @index 1)}}
+            <!-- </div> -->
     </div>
+    
     {{/each}}
+    {{inject "num" (getVar "num")}}
 </div>
