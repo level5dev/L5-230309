@@ -1,0 +1,3 @@
+{
+  "components/custom/product/details-list": "<div>\r\n    <ul class=\"product-details-list\">\r\n        {{#filter product.custom_fields '__product-details' property='name'}}\r\n            <li>\r\n                {{{value}}}\r\n            </li>\r\n        {{/filter}}\r\n    </ul>\r\n</div>\r\n"
+}

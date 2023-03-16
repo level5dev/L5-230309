@@ -1,0 +1,3 @@
+{
+  "components/custom/cart-page-upsell-targets--related": "[\r\n    {{#each product.related_products}}\r\n        {{#unless out_of_stock_message}}\r\n            \"{{id}}\"\r\n            {{#unless @last}},{{/unless}}\r\n        {{/unless}}\r\n    {{/each}}\r\n]\r\n"
+}

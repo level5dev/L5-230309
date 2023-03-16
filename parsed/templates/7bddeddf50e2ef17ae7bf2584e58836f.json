@@ -1,0 +1,4 @@
+{
+  "components/custom/blog/blog-sidebar-recent-posts": "<ul class=\"blog-sidebar__recent-list\" id=\"blog-sidebar-recent\">\r\n    {{> components/custom/blog/blog-recent-post-items }}\r\n</ul>\r\n",
+  "components/custom/blog/blog-recent-post-items": "{{#if is_ajax}}\r\n    {{#each blog.recent_posts}}\r\n        <li class=\"blog-sidebar__recent-list-item\">\r\n            <a href=\"{{url}}\">{{title}}</a>\r\n        </li>\r\n    {{/each}}\r\n{{else}}\r\n    {{#for 1 5}}\r\n        <li class=\"blog-sidebar__recent-list-skeleton\">\r\n            &nbsp;\r\n        </li>\r\n    {{/for}}\r\n{{/if}}\r\n"
+}

@@ -1,0 +1,3 @@
+{
+  "components/custom/blog/blog-sidebar-finishers-pick": "<article class=\"blog-side__container\">\r\n    <h3 class=\"blog-sidebar__header h3\">\r\n        {{lang 'custom.blog.sidebar.finishers-pick.heading'}}\r\n    </h3>\r\n    <ul class=\"blog-sidebar__list\">\r\n        {{#for 1 (lang 'custom.blog.sidebar.finishers-pick.number-of-posts')}}\r\n        <li class=\"blog-sidebar__list-item\">\r\n            <a href=\"{{lang (concat (concat 'custom.blog.sidebar.finishers-pick.post-'$index)'.link')}}\">{{lang (concat (concat 'custom.blog.sidebar.finishers-pick.post-'$index)'.title')}}</a>\r\n        </li>\r\n        {{/for}}\r\n    </ul>\r\n</article>\r\n    \r\n"
+}

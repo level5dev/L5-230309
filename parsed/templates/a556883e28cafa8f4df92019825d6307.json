@@ -1,0 +1,3 @@
+{
+  "components/attributes/body-classes": "{{#contains page_type 'account'}}\r\n    page--account\r\n{{/contains}}\r\n\r\npage--{{ page_type }}\r\n\r\n{{#if page_type '===' 'category'}}\r\n    category--{{category.id}}\r\n{{else if page_type '===' 'product'}}\r\n    product--{{product.id}}\r\n{{else if page_type '===' 'page'}}\r\n    page--{{#replace ' ' (dashcase page.title)}}{{else}}{{dashcase page.title}}{{/replace}}\r\n{{/if}}\r\n\r\n{{#if customer}}\r\n    logged-in\r\n    customer-group-{{#if customer_group_id}}{{customer_group_id}}{{else}}null{{/if}}\r\n{{else}}\r\n    not-logged-in\r\n{{/if}}\r\n\r\n{{#and (if theme_settings.its.kitchen_sink) (if in_development)}}\r\n    show-kitchen-sink\r\n{{/and}}\r\n"
+}
