@@ -471,6 +471,7 @@ a {
 .pos--rel__ctr.sm {
   padding-right: 30px;
   padding-left: 30px;
+  cursor: pointer;
 }
 
 .pos--rel__ctr.sm.slides {
@@ -482,6 +483,7 @@ a {
 .pos--rel__ctr.lg {
   width: 100%;
   height: 100%;
+  cursor: pointer;
 }
 
 .slider--main__content {
@@ -542,7 +544,7 @@ a {
 .h4--light {
   font-family: Roboto, sans-serif;
   color: #fff;
-  font-size: 20px;
+  font-size: 1.5vw;
   font-weight: 300;
   text-transform: uppercase;
 }

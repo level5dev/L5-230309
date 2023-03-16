@@ -9,19 +9,17 @@
         </a>
     
         <ul class="navPages-list{{#if theme_settings.navigation_design '!==' 'simple'}} navPages-list-depth-max{{/if}} links">
-            {{#each categories}}
-                {{#if name '===' 'Sale'}}
-                {{else}}
-                    <li class="navPages-item">
-                        {{#if ../theme_settings.navigation_design '===' 'simple'}}
-                            {{> components/common/navigation-list}}
-                        {{/if}}
-                        {{#if ../theme_settings.navigation_design '===' 'alternate'}}
-                            {{> components/common/navigation-list-alternate}}
-                        {{/if}}
-                    </li>
-                {{/if}}
-            {{/each}}
+            {{#for 1 (lang 'custom.header.menu.number-of-menus')}}
+                <li class="navPages-item">
+                {{> components/common/navigation-list-custom}}
+                </li>
+            {{/for}}
+            <li class="navPages-item mobile">
+                <a class="navPages-action{{#if is_active}} activePage{{/if}}"
+                                href="/merch/"
+                                aria-label="Merch"
+                                >MERCH</a>
+            </li>
             {{!-- {{#unless theme_settings.hide_content_navigation}}
             {{#each pages}}
             <li class="navPages-item navPages-item-page">
